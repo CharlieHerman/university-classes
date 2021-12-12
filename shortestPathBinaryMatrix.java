@@ -4,33 +4,25 @@ class shortestPathBinaryMatrix {
         HashSet<String> visited = new HashSet<String>();
         Queue<List<Integer>> queue = new LinkedList<List<Integer>>();
         List<Integer> coord = new ArrayList<Integer>();
-        int currentDist;
-        int dist = -1;
+        List<Integer> newCoord = new ArrayList<Integer>();
         int[][] directions = {{-1,-1},{-1,1},{1,-1},{1,1},{-1,0},{1,0},{0,-1},{0,1}};
         int[][] pathLength = new int[grid.length][grid[0].length];
         int[] currentDirection;
-        List<Integer> newCoord = new ArrayList<Integer>();
-        coord.add(0);
-        coord.add(0);
-        visited.add("" + coord.get(0) + ',' + coord.get(1));
+        int currentDist;
+        int dist = -1;
 
-        if(grid[0][0] == 1) return -1;
-        if(grid[0][0] == 0 && grid.length == 1) return 1;
-
-        queue.add(new ArrayList(coord));
+        if(grid[0][0] == 0) {
+            pathLength[0][0] = 1;
+            coord.add(0);
+            coord.add(0);
+            queue.add(new ArrayList(coord));
+            visited.add("" + coord.get(0) + ',' + coord.get(1));
+        }
+        
         while(!queue.isEmpty()) {
             coord.clear();
             coord = queue.remove();
-
             currentDist = pathLength[coord.get(0)][coord.get(1)];
-            if( currentDist == 0) {
-                pathLength[coord.get(0)][coord.get(1)] = 1;
-            }
-            if(coord.get(0) == grid.length-1 && coord.get(1) == grid.length-1) {
-                if(dist == -1 || currentDist < dist) {
-                    dist = currentDist;
-                }
-            }
             for(int i = 0; i < directions.length; i++) {
                 currentDirection = directions[i];
                 newCoord.clear();
@@ -48,6 +40,8 @@ class shortestPathBinaryMatrix {
                 }
             }
         }
-        return dist;
+        
+        if(pathLength[grid.length-1][grid[0].length-1] == 0) return -1;
+        return pathLength[grid.length-1][grid[0].length-1];
     }
 }

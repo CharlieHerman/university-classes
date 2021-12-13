@@ -40,8 +40,27 @@ class shortestPathBinaryMatrix {
                 }
             }
         }
-        
+        printArray(pathLength);
         if(pathLength[grid.length-1][grid[0].length-1] == 0) return -1;
         return pathLength[grid.length-1][grid[0].length-1];
+    }
+    public void printArray(int[][] arr) {
+        System.out.println();
+        for(int i = 0; i < arr.length; i++) {
+            for(int j = 0; j < arr[0].length; j++) {
+                if(arr[i][j] != 0) {
+                    System.out.printf("|\033[46m" + "%-3d" + "\033[0m", arr[i][j]);
+                }
+                else {
+                    System.out.printf("|%-3d", arr[i][j]);
+                }
+            }
+            System.out.println('|');
+            for(int j = 0; j < arr[0].length*4+1; j++) {
+                System.out.print('=');
+            }
+            System.out.println();
+        }
+        System.out.println();
     }
 }
